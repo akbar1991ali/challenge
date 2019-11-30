@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="scp-breadcrumb shadow-bottom">
+    <ul class="breadcrumb ">
+      <li>
+        <i class="fa fa-home" aria-hidden="true"></i>
+        <a [routerLink]="['/home']"> Home</a>
+      </li>
+      <li>
+        <a>Class</a>
+      </li>
+      <li class="active">Question Setup </li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="panel panel-default shadow-all">
+      <div class="panel-heading">Add Question</div>
+
+      <div class="panel-body">
+        <form [formGroup]='QuestionForm' (ngSubmit)='save()' novalidate>
+
+          <div class="form-group">
+            <label>Select Exam</label>
+            <select class="form-control input-sm" formControlName="examTitle">
+              <option value="" disabled>Select Exam</option>
+              <option *ngFor="let exam of examTitleData" [value]="exam.id">{{exam.title_name}}</option>
+            </select>
+            <div *ngIf=" (examTitle.dirty || isSubmitted) && examTitle.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="examTitle.errors.required">Select Title</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Select Class</label>
+            <select class="form-control input-sm" formControlName="class">
+              <option value="" disabled>Select Class</option>
+              <option *ngFor="let class of classData" [value]="class.id">{{class.name}}</option>
+            </select>
+            <div *ngIf=" (class.dirty || isSubmitted) && class.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="class.errors.required">Select Title</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Question</label>
+    
+            <textarea class="form-control input-sm" formControlName="question"></textarea>
+            <div *ngIf=" (question.dirty || isSubmitted) && question.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="question.errors.required">Enter Question</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Option A</label>
+            <input type="text" class="form-control input-sm" formControlName="optA">
+            <div *ngIf=" (optA.dirty || isSubmitted) && optA.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="optA.errors.required">Enter Option A</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Option B</label>
+            <input type="text" class="form-control input-sm" formControlName="optB">
+            <div *ngIf=" (optB.dirty || isSubmitted) && optB.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="optB.errors.required">Enter Option B</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Option C</label>
+            <input type="text" class="form-control input-sm" formControlName="optC">
+            <div *ngIf=" (optC.dirty || isSubmitted) && optC.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="optC.errors.required">Enter Option C</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Option D</label>
+            <input type="text" class="form-control input-sm" formControlName="optD">
+            <div *ngIf=" (optD.dirty || isSubmitted) && optD.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="optD.errors.required">Enter Option D</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Select Answer</label>
+            <select class="form-control input-sm" formControlName="ans">
+              <option value="" disabled>Select Answer</option>
+              <option value="1" >Option A</option>
+              <option value="2" >Option B</option>
+              <option value="3" >Option C</option>
+              <option value="4">Option D</option>
+            
+            </select>
+            <div *ngIf=" (ans.dirty || isSubmitted) && ans.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="ans.errors.required">Select Answer</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button class="btn btn-primary btn-block" type="submit" [disabled]="!QuestionForm.valid">
+                Add Question</button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button class="btn btn-primary btn-block" type="reset">
+                Reset</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-lg-8">
+    <div class="panel panel-default shadow-all" style="width:100%">
+      <div class="panel-heading">
+        <h3 class="panel-title">Exam List</h3>
+
+      </div>
+
+      <div class="panel-body">
+
+        <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-balham" [enableSorting]="true"
+          [enableFilter]="true" [floatingFilter]="true" [rowData]="rowData" [columnDefs]="columnDefs"
+          [pagination]="true" [paginationPageSize]="10" (rowClicked)="onRowClicked($event)">
+        </ag-grid-angular>
+        <p>For Sorting The column Please Click on Column Header. Pagination Button is on Bottom of Data grid with page
+          Number and Number of Records.</p>
+      </div>
+    </div>
+  </div>
+</div>

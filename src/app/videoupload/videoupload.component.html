@@ -1,0 +1,219 @@
+<div class="row">
+  <div class="scp-breadcrumb shadow-bottom">
+    <ul class="breadcrumb ">
+      <li>
+        <i class="fa fa-home" aria-hidden="true"></i>
+        <a [routerLink]="['/home']"> Home</a>
+      </li>
+      <li>
+        <a>Video</a>
+      </li>
+      <li class="active">Upload Video</li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="panel panel-default shadow-all">
+      <div class="panel-heading"></div>
+
+      <div class="panel-body">
+        <form [formGroup]='videoForm' (ngSubmit)='onSubmit()' novalidate>
+
+          <div class="form-group">
+            <label>Class Name <span class="error">*</span></label>
+            <select class="form-control input-sm" formControlName="className"
+              (change)="getAllSubject($event.target.value)">
+              <option value="" disabled>Select Class</option>
+              <option *ngFor="let classdata of allClass" [value]="classdata.id">{{classdata.name}}</option>
+            </select>
+            <div *ngIf=" (className.dirty || isSubmitted) && className.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="className.errors.required">Select Class</span>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Subject Name <span class="error">*</span></label>
+            <select class="form-control input-sm" formControlName="subjectName"
+              (change)="getAllChapter($event.target.value)">
+              <option value="" disabled>Select Subject</option>
+              <option *ngFor="let subject of allSubject" [value]="subject.subject_id">{{subject.subject_name}}</option>
+            </select>
+            <div *ngIf=" (subjectName.dirty || isSubmitted) && subjectName.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="subjectName.errors.required">Select Subject</span>
+
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label>Chapter Name <span class="error">*</span></label>
+            <select class="form-control input-sm" formControlName="chapterName">
+              <option value="" disabled>Select Chapter</option>
+              <option *ngFor="let chapter of allChapter" [value]="chapter.id">{{chapter.chapter_name}}</option>
+            </select>
+            <div *ngIf=" (chapterName.dirty || isSubmitted) && chapterName.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="chapterName.errors.required">Select Chapter</span>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Month Name <span class="error">*</span></label>
+            <select class="form-control input-sm" formControlName="monthName">
+              <option value="" disabled>Select Month</option>
+              <option *ngFor="let month of allMonth" [value]="month.id">{{month.month_name}}</option>
+            </select>
+            <div *ngIf=" (monthName.dirty || isSubmitted) && monthName.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="monthName.errors.required">Select Month</span>
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Video <span class="error">*</span></label>
+            <input type="file" (change)="uploadVideo($event)" class="btn btn-primary form-control">
+
+            <div *ngIf=" (video.dirty || isSubmitted) && video.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="video.errors.required">Add Video</span>
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Thumbnail <span class="error">*</span></label>
+            <input type="file" (change)="uploadThum($event)" class="btn btn-primary form-control">
+            <div *ngIf=" (thumb.dirty || isSubmitted) && thumb.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="thumb.errors.required">Add Thumbnail</span>
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Pdf</label>
+            <input type="file" (change)="uploadPdf($event)" class="btn btn-primary form-control">
+            <div *ngIf=" (pdf.dirty || isSubmitted) && pdf.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="pdf.errors.required">Add pdf</span>
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Video Title <span class="error">*</span></label>
+            <input type="text" formControlName="videoTitle" class=" form-control">
+            <div *ngIf=" (videoTitle.dirty || isSubmitted) && videoTitle.invalid" class=" error-msg">
+              <!-- <span class="error-msg" *ngIf="pdf.errors.required">Add pdf</span> -->
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Video Description</label>
+            <input type="text" formControlName="videoDesc" class=" form-control">
+            <div *ngIf=" (videoDesc.dirty || isSubmitted) && videoDesc.invalid" class=" error-msg">
+              <!-- <span class="error-msg" *ngIf="pdf.errors.required">Add pdf</span> -->
+
+            </div>
+          </div>
+          <div class="row">
+            <div>File Uploaded {{fileUploadPer}} %</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button class="btn btn-primary btn-block" type="submit" [disabled]="!videoForm.valid">
+                Add Video</button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button class="btn btn-primary btn-block" type="reset">
+                Reset</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="col-lg-8">
+    <div class="panel panel-default shadow-all" style="width:100%">
+      <div class="panel-heading">
+        <h3 class="panel-title">Chapter List</h3>
+
+      </div>
+
+      <div class="panel-body">
+
+        <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-balham" [enableSorting]="true"
+          [enableFilter]="true" [floatingFilter]="true" [rowData]="rowData" [columnDefs]="columnDefs"
+          [pagination]="true" [paginationPageSize]="10" (rowClicked)="onRowClicked($event)">
+        </ag-grid-angular>
+        <p>For Sorting The column Please Click on Column Header. Pagination Button is on Bottom of Data grid with page
+          Number and Number of Records.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true"
+  data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <alert></alert>
+      <form novalidate [formGroup]='EditvideoForm' (ngSubmit)='editSave()'>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
+          <h4 class="modal-title" id="Heading">Update Video</h4>
+
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label>Class</label>
+            <input  formControlName="EditclassName" type="text" class="form-control" readonly >
+            <input  formControlName="EditvideoId" type="hidden" class="form-control" readonly >
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input  formControlName="EditsubjectName" type="text" class="form-control" readonly >
+          </div>
+           <div class="form-group">
+            <label>Chapter</label>
+            <input  formControlName="EditchapterName" type="text" class="form-control" readonly >
+          </div>
+            <div class="form-group">
+            <label>Month</label>
+            <input  formControlName="EditmonthName" type="text" class="form-control" readonly >
+          </div>
+          <div class="form-group">
+            <label>Video</label>
+            <input class="form-control"  (change)="edituploadVideo($event)" formControlName="Editvideo" type="file" >
+            <div>File Uploaded {{fileUploadPerEdit}} %</div>
+
+          </div>
+          <div class="form-group">
+            <label>Thumbnail</label>
+            <input type="file" (change)="edituploadThum($event)" class="form-control" formControlName="Editthumb" >
+          </div>
+          <div class="form-group">
+            <label>PDF</label>
+            <input type="file" (change)="edituploadPdf($event)" class="form-control" formControlName="Editpdf">
+          </div>
+          <div class="form-group">
+            <label>Video Title</label>
+            <input type="text" class="form-control" formControlName="EditvideoTitle" placeholder="Enter Video Title">
+          </div>
+          <div class="form-group">
+            <label>Video Description</label>
+            <input type="text" class="form-control" formControlName="EditvideoDesc" placeholder="Enter Video Description">
+          </div>
+        </div>
+        <div class="modal-footer ">
+          <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;" [disabled]="!EditvideoForm.valid">
+            <span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

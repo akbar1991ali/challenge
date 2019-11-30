@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="scp-breadcrumb shadow-bottom">
+    <ul class="breadcrumb ">
+      <li>
+        <i class="fa fa-home" aria-hidden="true"></i>
+        <a [routerLink]="['/home']"> Home</a>
+      </li>
+      <li>
+        <a>Class</a>
+      </li>
+      <li class="active">Create Class</li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-4">
+      <div class="panel panel-default shadow-all">
+          <div class="panel-heading">Add Class</div>
+         
+          <div class="panel-body">
+              <form [formGroup]='classForm' (ngSubmit)='save()' novalidate>
+                  <div class="form-group">
+                      <label>Class Name</label>
+                    
+                      <input type="text" class="form-control input-sm"  formControlName="class_name" >
+
+                      <div *ngIf=" (class_name.dirty || isSubmitted) && class_name.invalid" class=" error-msg">
+                          <span class="error-msg" *ngIf="class_name.errors.required">Enter Class</span>
+                         
+                      </div>
+                  </div>
+             
+            
+                  <div class="row">
+                      <div class="col-lg-6 col-md-6 col-sm-6">
+                          <button class="btn btn-primary btn-block" type="submit" [disabled]="!classForm.valid">
+                              Add Class</button>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6">
+                          <button class="btn btn-primary btn-block" type="reset">
+                              Reset</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+  </div>
+  <div class="col-lg-8">
+      <div class="panel panel-default shadow-all" style="width:100%">
+          <div class="panel-heading">
+              <h3 class="panel-title">Class List</h3>
+           
+          </div>
+
+          <div class="panel-body">
+
+            <ag-grid-angular 
+            style="width: 100%; height: 500px;" 
+            class="ag-theme-balham"
+            [enableSorting]="true"
+            [enableFilter]="true"
+            [floatingFilter]="true"
+            [rowData]="rowData" 
+            [columnDefs]="columnDefs"
+            [pagination]="true"
+            [paginationPageSize]="10"
+            (rowClicked)="onRowClicked($event)"
+        
+            >
+          </ag-grid-angular>
+        <p>For Sorting The column Please Click on Column Header. Pagination Button is on Bottom of Data grid with page Number and Number of Records.</p>
+          </div>
+      </div>
+  </div>
+</div>
+

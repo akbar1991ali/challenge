@@ -1,0 +1,189 @@
+import { map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { environment } from './../../environments/environment';
+import { HttpClient ,HttpRequest} from '@angular/common/http';
+@Injectable({
+  providedIn: 'root'
+})
+export class SaveDataService {
+
+  apiUrl = environment.baseUrl;
+
+  constructor(private http: HttpClient) { }
+
+
+  saveFee(formdata: any) {
+    return this.http.post<any>(this.apiUrl + 'class.php', formdata)
+      .pipe(map(data => {
+
+
+        return data;
+      }));
+
+  }
+
+  saveSubject(formdata: any) {
+    return this.http.post<any>(this.apiUrl + 'subjectSetup.php', { subjectName: formdata.subject, classid: formdata.className, month_id: formdata.month_id })
+      .pipe(map(data => {
+
+
+        return data;
+      }));
+
+  }
+
+  uploadVideo(formdata: any) {
+    // return this.http.post<any>(this.apiUrl + 'upload_video.php', formdata, {
+    //   reportProgress: true,
+    // })
+    //   .pipe(map(data => {
+
+
+    //     return data;
+    //   }));
+    return this.http.post(this.apiUrl + 'upload_video.php', formdata, { reportProgress: true, observe: 'events' })
+
+      // const req = new HttpRequest('POST', this.apiUrl + 'upload_video.php', formdata, {
+      //   reportProgress: true,
+      // });
+  }
+
+  
+  edituploadVideo(formdata: any) {
+    // return this.http.post<any>(this.apiUrl + 'upload_video.php', formdata, {
+    //   reportProgress: true,
+    // })
+    //   .pipe(map(data => {
+
+
+    //     return data;
+    //   }));
+    return this.http.post(this.apiUrl + 'file_update.php', formdata, { reportProgress: true, observe: 'events' })
+
+      // const req = new HttpRequest('POST', this.apiUrl + 'upload_video.php', formdata, {
+      //   reportProgress: true,
+      // });
+  }
+
+
+  postExamTitle(formdata: any) {
+    return this.http.post<any>(this.apiUrl + 'exam_title_master.php',
+     { title_name: formdata.examTitle ,
+      class_id:formdata.class_id,
+      start_time:formdata.startDate,
+      end_time :formdata.endDate
+    })
+      .pipe(map(data => {
+
+
+        return data;
+      }));
+
+  }
+
+  postExam(formdata: any) {
+    return this.http.post<any>(this.apiUrl + 'exam_setup.php', {
+      title_id: formdata.examTitle,
+      start_time: formdata.startDate,
+      end_time: formdata.endDate
+    })
+      .pipe(map(data => {
+
+
+        return data;
+      }));
+
+  }
+
+  postQuestion(formdata: any) {
+    return this.http.post<any>(this.apiUrl + 'exam_question_setup.php',[ {
+      title_id: formdata.examTitle,
+      class_id: formdata.class,
+      question: formdata.question,
+      option1: formdata.optA,
+      option2: formdata.optB,
+      option3: formdata.optC,
+      option4: formdata.optD,
+      flag: 1,
+      answer: formdata.ans
+    }])
+      .pipe(map(data => {
+
+
+        return data;
+      }));
+
+  }
+
+
+  postQuestionTopic(formdata: any) {
+    return this.http.post<any>(this.apiUrl + 'exam_question_setup.php',[ {
+      video_id: formdata.video_id,
+      subject_id: formdata.subject_name,
+      class_id: formdata.class_name,
+      question: formdata.question,
+      option1: formdata.option1,
+      option2: formdata.option2,
+      option3: formdata.option3,
+      option4: formdata.option4,
+      flag: 1,
+      answer: formdata.answer
+    }])
+      .pipe(map(data => {
+
+
+        return data;
+      }));
+
+  }
+
+
+  postClass(formdata: any) {
+    return this.http.post<any>(this.apiUrl + 'student_class.php', {
+      class_name: formdata.class_name,
+      session: '2019-2020',
+      action:'add_class'
+    
+    })
+      .pipe(map(data => {
+
+
+        return data;
+      }));
+
+  }
+  deleteClass(classid: any) {
+    return this.http.post<any>(this.apiUrl + 'add_class.php',{
+      class_id:classid,
+      action:'delete'
+    })
+      .pipe(map(data => {
+        return data;
+      }));
+
+  }
+
+
+  deleteVideo(videoid: any) {
+    return this.http.post<any>(this.apiUrl + 'video_operation.php',{
+      video_id:videoid,
+      action:'delete'
+    })
+      .pipe(map(data => {
+        return data;
+      }));
+
+  }
+
+  deleteOperation(id,action)
+  {
+    return this.http.post<any>(this.apiUrl + 'delete_operation.php',{
+      id:id,
+      target:action
+    })
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+}

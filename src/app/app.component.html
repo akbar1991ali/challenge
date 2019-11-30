@@ -1,0 +1,12 @@
+<app-loader></app-loader>
+<div *ngIf="LocalStore()" >
+<app-sidebar >
+</app-sidebar>
+</div>
+<!-- *ngIf="LocalStore()" -->
+
+<div *ngIf="!LocalStore()">
+<app-login></app-login>
+</div>
+
+<router-outlet  name="sidebar"></router-outlet>
