@@ -12,9 +12,9 @@ export class StudentsListComponent implements OnInit {
   rowData = [];
   StudentEdit: FormGroup;
   classData = [];
-  isSubmitted=false
+  isSubmitted = false
 
-  constructor(private frmBuilder: FormBuilder, private fetchData: FetchdataService, private saveservice: SaveDataService) { }
+  constructor(private frmBuilder: FormBuilder, private fetchData: FetchdataService, private saveData: SaveDataService) { }
 
   ngOnInit() {
 
@@ -26,8 +26,6 @@ export class StudentsListComponent implements OnInit {
       email: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       contact: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       user_id: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-
-
 
     });
 
@@ -77,7 +75,7 @@ export class StudentsListComponent implements OnInit {
 
 
   deleteStudent(id) {
-    this.saveservice.deleteOperation(id, 'user').
+    this.saveData.deleteOperation(id, 'user').
       subscribe(
         data => {
           this.getStudentsList()
@@ -92,14 +90,23 @@ export class StudentsListComponent implements OnInit {
   }
 
 
-  save()
-  {
-    this.isSubmitted=true
-    if(!this.StudentEdit.valid)
-    {
+  save() {
+    this.isSubmitted = true
+    if (!this.StudentEdit.valid) {
       return
     }
-    alert("Somethging went wrong")
+    this.saveData.updateStudent(this.StudentEdit.value).
+      subscribe(
+        data => {
+          this.getStudentsList()
+
+          alert("Successfully Updated")
+
+        },
+        error => {
+          alert(error.error.message)
+          console.log(error.error.message);
+        });
   }
 
   columnDefs = [
@@ -164,7 +171,7 @@ export class StudentsListComponent implements OnInit {
     this.user_id.setValue(data.user_id)
     this.first_name.setValue(data.first_name)
     this.last_name.setValue(data.last_name)
-    this.class_id.setValue(data.class_name)
+    this.class_id.setValue(data.class_id)
     this.email.setValue(data.email)
     this.contact.setValue(data.contact)
 

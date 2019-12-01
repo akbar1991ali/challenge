@@ -96,3 +96,51 @@
   </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true" data-backdrop="static"
+  >
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <alert></alert>
+            <form [formGroup]='editfunForm' (ngSubmit)='updateSubject()'  novalidate>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                    <h4 class="modal-title" id="Heading">Update Fee</h4>
+                   
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Class</label>
+                        <input class="form-control " type="text" readonly required formControlName="editClass" readonly>
+                        <input class="form-control " type="hidden" readonly required formControlName="editId" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Month</label>
+                        <input type="text" class="form-control" readonly  formControlName="editMonth">
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" class="form-control" placeholder="Monthly Fee" formControlName="editSubject">
+                        <div *ngIf=" (editSubject.dirty || isSubmitted) && editSubject.invalid" class=" error-msg">
+                          <span class="error-msg" *ngIf="editSubject.errors.required">Enter subject</span>
+                          <span class="error-msg" *ngIf="editSubject.errors.minlength">subject should be minimum {{editSubject.errors.minlength.requiredLength}} character</span>
+                          <span class="error-msg" *ngIf="editSubject.errors.maxlength">subject should be Maximum {{editSubject.errors.maxlength.requiredLength}} character</span>
+                       
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;" [disabled]="!editfunForm.valid">
+                        <span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+

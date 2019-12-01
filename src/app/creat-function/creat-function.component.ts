@@ -138,6 +138,22 @@ export class CreatFunctionComponent implements OnInit {
         });
   }
 
+  updateFee()
+  {
+    this.saveData.updateFee(this.editfunForm.value).
+    subscribe(
+      data => {
+        this.getFee()
+
+        alert("Successfully Updated")
+
+      },
+      error => {
+        alert(error.error.message)
+      
+        console.log(error.error.message);
+      });
+  }
 
 
   columnDefs = [
@@ -181,7 +197,7 @@ export class CreatFunctionComponent implements OnInit {
     this.editAmount.setValue(data.fee)
     this.editClass.setValue(data.name)
     this.editMonth.setValue(data.monthname)
-    this.editId.setValue(data.id)
+    this.editId.setValue(data.fee_id)
 
 
 

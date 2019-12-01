@@ -11,24 +11,32 @@ import { SaveDataService } from '../_services/save-data.service';
 })
 export class ClasssetupComponent implements OnInit {
   classForm: FormGroup;
-  allClass:any;
-  isSubmitted:boolean=false;
+  allClass: any;
+  isSubmitted: boolean = false;
   rowData = [];
-  allMonth:any;
+  allMonth: any;
+  editfunForm: FormGroup;
+
   constructor(private frmBuilder: FormBuilder, private http: HttpClient,
     private fetchData: FetchdataService, private saveData: SaveDataService) { }
 
 
   ngOnInit() {
- 
+
     this.classForm = this.frmBuilder.group({
-      
+
       className: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       subject: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       month_id: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]]
     });
 
+    this.editfunForm = this.frmBuilder.group({
+      editSubject: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
+      editMonth: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editClass: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editId: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]]
 
+    });
     this.getAllClass();
     this.getSubject();
     this.getMonth()
@@ -40,6 +48,11 @@ export class ClasssetupComponent implements OnInit {
   get month_id() { return this.classForm.get('month_id'); }
 
 
+  get editSubject() { return this.editfunForm.get('editSubject'); }
+  get editMonth() { return this.editfunForm.get('editMonth'); }
+  get editClass() { return this.editfunForm.get('editClass'); }
+  get editId() { return this.editfunForm.get('editId'); }
+
   getAllClass() {
     this.fetchData.getClass().
       subscribe(
@@ -47,7 +60,7 @@ export class ClasssetupComponent implements OnInit {
 
           // console.log(data);
           this.allClass = data.class;
-         
+
 
 
         },
@@ -58,7 +71,7 @@ export class ClasssetupComponent implements OnInit {
   }
 
 
-  
+
   save() {
 
     this.isSubmitted = true;
@@ -71,7 +84,7 @@ export class ClasssetupComponent implements OnInit {
           // this.alert.success("Data Inserted SuccessFully")
           this.getSubject()
           alert("Data Inserted SuccessFully")
-         this.classForm.reset()
+          this.classForm.reset()
 
           if (data) {
             console.log(data);
@@ -110,7 +123,7 @@ export class ClasssetupComponent implements OnInit {
       subscribe(
         data => {
 
-          console.log(data);
+          // console.log(data);
 
           this.rowData = data.subject;
 
@@ -137,8 +150,27 @@ export class ClasssetupComponent implements OnInit {
         });
   }
 
+  updateSubject()
+  {
+    this.saveData.updateSubject(this.editfunForm.value).
+    subscribe(
+      data => {
+        
+        this.getSubject();
+
+        alert("Successfully Updated")
+
+      },
+      error => {
+        alert(error.error.message)
+      
+        console.log(error.error.message);
+      });
+  }
+
+
   columnDefs = [
-    { headerName: 'Subject ID', field: 'id' , width: 100},
+    { headerName: 'Subject ID', field: 'id', width: 100 },
     { headerName: 'Class', field: 'name', width: 100 },
     { headerName: 'Subject Name', field: 'subjectName', width: 150 },
     { headerName: 'Month', field: 'month_name', width: 150 },
@@ -149,7 +181,7 @@ export class ClasssetupComponent implements OnInit {
       autoHeight: true,
 
       template:
-        `<button type="button" data-action-type="view" class="btn btn-primary" data-toggle="modal" data-target="#edit">
+        `<button type="button" data-action-type="edit" class="btn btn-primary" data-toggle="modal" data-target="#edit">
          Edit
        </button>
 
@@ -166,7 +198,7 @@ export class ClasssetupComponent implements OnInit {
       let actionType = e.event.target.getAttribute("data-action-type");
 
       switch (actionType) {
-        case "view":
+        case "edit":
           return this.onActionViewClick(data);
         case "remove":
           return this.onActionRemoveClick(data);
@@ -176,6 +208,11 @@ export class ClasssetupComponent implements OnInit {
 
   public onActionViewClick(data: any) {
     // console.log("View action clicked", data);
+
+    this.editClass.setValue(data.name)
+    this.editId.setValue(data.id)
+    this.editMonth.setValue(data.month_name)
+    this.editSubject.setValue(data.subjectName)
 
   }
 

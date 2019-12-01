@@ -186,4 +186,55 @@ export class SaveDataService {
       }));
   }
 
+  ///////////Update /////////////
+  updateStudent(data)
+  {
+    {
+      return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.user_id,target:'student',
+      field:{
+        "fname": data.first_name,
+        "lname":data.last_name,
+        "email":data.email,
+        "contact":data.contact,
+        "class":data.class_id
+      }
+    
+      })
+        .pipe(map(data => {
+          return data;
+        }));
+    }
+  }
+
+
+  updateFee(data)
+  {
+    {
+      return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editId,target:'fee',
+      field:{
+        "amount": data.editAmount
+      }
+    
+      })
+        .pipe(map(data => {
+          return data;
+        }));
+    }
+  }
+  updateSubject(data)
+  {
+    {
+      return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editId,target:'subject',
+      field:{
+        "subject_name": data.editSubject
+      }
+    
+      })
+        .pipe(map(data => {
+          return data;
+        }));
+    }
+  }
+
+
 }
