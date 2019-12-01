@@ -118,31 +118,48 @@
     <div class="modal-dialog">
         <div class="modal-content">
                 <alert></alert>
-            <form  novalidate>
+            <form [formGroup]='editchapterForm' (ngSubmit)='updateChapter()'  novalidate>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     </button>
-                    <h4 class="modal-title" id="Heading">Update Fee</h4>
+                    <h4 class="modal-title" id="Heading">Update Chapter</h4>
                    
                 </div>
                 <div class="modal-body">
-Under Construction
-                    <!-- <div class="form-group">
-                        <label>Class ID</label>
-                        <input class="form-control " type="text" placeholder="Function ID" required formControlName="editfunctionId" readonly>
+
+                    <div class="form-group">
+                        <label>Class</label>
+                        <input class="form-control " type="text" readonly required formControlName="editClass" readonly>
+                        <input class="form-control " type="hidden" readonly required formControlName="editId" readonly>
                     </div>
                     <div class="form-group">
-                        <label>Class Name</label>
-                        <input type="text" class="form-control" placeholder="Function Name" formControlName="editfunctionName">
+                        <label>Month</label>
+                        <input type="text" class="form-control" readonly  formControlName="editMonth">
                     </div>
                     <div class="form-group">
-                        <label>Class Status</label>
-                        <input type="text" class="form-control" placeholder="Function Status" formControlName="editfunctionStatus">
-                    </div> -->
+                        <label>Subject</label>
+                        <input type="text" class="form-control" readonly formControlName="editSubject">
+                        <div *ngIf=" (editSubject.dirty || isSubmitted) && editSubject.invalid" class=" error-msg">
+                          <span class="error-msg" *ngIf="editSubject.errors.required">Enter subject</span>
+                          <span class="error-msg" *ngIf="editSubject.errors.minlength">subject should be minimum {{editSubject.errors.minlength.requiredLength}} character</span>
+                          <span class="error-msg" *ngIf="editSubject.errors.maxlength">subject should be Maximum {{editSubject.errors.maxlength.requiredLength}} character</span>
+                       
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Chapter</label>
+                        <input type="text" class="form-control"  formControlName="editChapter">
+                        <div *ngIf=" (editChapter.dirty || isSubmitted) && editChapter.invalid" class=" error-msg">
+                          <span class="error-msg" *ngIf="editChapter.errors.required">Enter Chapter</span>
+                          <span class="error-msg" *ngIf="editChapter.errors.minlength">Chapter should be minimum {{editChapter.errors.minlength.requiredLength}} character</span>
+                          <span class="error-msg" *ngIf="editChapter.errors.maxlength">Chapter should be Maximum {{editChapter.errors.maxlength.requiredLength}} character</span>
+                       
+                      </div>
+                    </div>
                 </div>
                 <div class="modal-footer ">
-                    <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;">
+                    <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;" [disabled]="!editchapterForm.valid">
                         <span class="glyphicon glyphicon-ok-sign"></span> Update</button>
                 </div>
             </form>
@@ -151,3 +168,4 @@ Under Construction
     </div>
     <!-- /.modal-dialog -->
 </div>
+

@@ -189,7 +189,7 @@ export class SaveDataService {
   ///////////Update /////////////
   updateStudent(data)
   {
-    {
+    
       return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.user_id,target:'student',
       field:{
         "fname": data.first_name,
@@ -203,13 +203,13 @@ export class SaveDataService {
         .pipe(map(data => {
           return data;
         }));
-    }
+    
   }
 
 
   updateFee(data)
   {
-    {
+    
       return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editId,target:'fee',
       field:{
         "amount": data.editAmount
@@ -219,10 +219,10 @@ export class SaveDataService {
         .pipe(map(data => {
           return data;
         }));
-    }
+    
   }
   updateSubject(data)
-  {
+  
     {
       return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editId,target:'subject',
       field:{
@@ -234,7 +234,20 @@ export class SaveDataService {
           return data;
         }));
     }
-  }
-
+  
+    updateChapter(data)
+  
+    {
+      return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editId,target:'chapter',
+      field:{
+        "name": data.editChapter
+      }
+    
+      })
+        .pipe(map(data => {
+          return data;
+        }));
+    }
+  
 
 }

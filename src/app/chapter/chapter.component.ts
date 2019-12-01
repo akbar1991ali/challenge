@@ -31,6 +31,15 @@ export class ChapterComponent implements OnInit {
 
     });
 
+    this.editchapterForm = this.frmBuilder.group({
+      editSubject: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
+      editChapter: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
+      editMonth: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editClass: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editId: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]]
+
+    });
+
     this.getAllClass()
     this.getChapterdata()
     this.getMonth()
@@ -44,6 +53,12 @@ export class ChapterComponent implements OnInit {
   get monthName() { return this.chapterForm.get('monthName'); }
 
 
+  get editSubject() { return this.editchapterForm.get('editSubject'); }
+  get editChapter() { return this.editchapterForm.get('editChapter'); }
+  get editMonth() { return this.editchapterForm.get('editMonth'); }
+  get editClass() { return this.editchapterForm.get('editClass'); }
+  get editId() { return this.editchapterForm.get('editId'); }
+
   save() {
     this.fetchData.postChapter(this.chapterForm.value).
       subscribe(
@@ -54,7 +69,7 @@ export class ChapterComponent implements OnInit {
 
         },
         error => {
-alert(error.error.message)
+          alert(error.error.message)
           console.log(error.error);
         });
   }
@@ -138,6 +153,26 @@ alert(error.error.message)
         });
   }
 
+  updateChapter()
+  {
+    this.saveData.updateChapter(this.editchapterForm.value).
+    subscribe(
+      data => {
+
+        
+        this.getChapterdata()
+        alert("Successfully Updated")
+
+      },
+      error => {
+        alert(error.error.message)
+      
+        console.log(error.error.message);
+      });
+  }
+
+
+
   columnDefs = [
     { headerName: 'Month Name', field: 'month_name', width: 120 },
     { headerName: 'Class ', field: 'class_name', width: 100 },
@@ -150,7 +185,7 @@ alert(error.error.message)
       autoHeight: true,
 
       template:
-        `<button type="button" data-action-type="view" class="btn btn-primary" data-toggle="modal" data-target="#edit">
+        `<button type="button" data-action-type="edit" class="btn btn-primary" data-toggle="modal" data-target="#edit">
          Edit
        </button>
 
@@ -167,7 +202,7 @@ alert(error.error.message)
       let actionType = e.event.target.getAttribute("data-action-type");
 
       switch (actionType) {
-        case "view":
+        case "edit":
           return this.onActionViewClick(data);
         case "remove":
           return this.onActionRemoveClick(data);
@@ -177,7 +212,11 @@ alert(error.error.message)
 
   public onActionViewClick(data: any) {
     // console.log("View action clicked", data);
-
+    this.editChapter.setValue(data.chapter_name)
+    this.editClass.setValue(data.class_name)
+    this.editMonth.setValue(data.month_name)
+    this.editSubject.setValue(data.subject_name)
+    this.editId.setValue(data.id)
   }
 
   public onActionRemoveClick(data: any) {
@@ -185,7 +224,7 @@ alert(error.error.message)
     if (confirm("Are you sure to Delete " + data.chapter_name)) {
       console.log("Remove action clicked", data.id);
       this.deleteChapter(data.id)
-      
+
     }
   }
 
