@@ -11,6 +11,7 @@ import { SaveDataService } from '../_services/save-data.service';
 })
 export class ExamTitleSetupComponent implements OnInit {
   ExamTitleForm: FormGroup;
+  EditExamForm:FormGroup
   isSubmitted: boolean = false;
   rowData = [];
   classData=[];
@@ -29,6 +30,15 @@ export class ExamTitleSetupComponent implements OnInit {
 
     });
 
+    this.EditExamForm = this.frmBuilder.group({
+      editTitle: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
+      editStartTime: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
+      editEndTime: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editClass: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editId: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]]
+
+    });
+
     this.getExam()
     this.getClassDrop()
   }
@@ -37,6 +47,12 @@ export class ExamTitleSetupComponent implements OnInit {
   get class_id() { return this.ExamTitleForm.get('class_id'); }
   get startDate() { return this.ExamTitleForm.get('startDate'); }
   get endDate() { return this.ExamTitleForm.get('endDate'); }
+
+  get editTitle() { return this.EditExamForm.get('editTitle'); }
+  get editStartTime() { return this.EditExamForm.get('editStartTime'); }
+  get editEndTime() { return this.EditExamForm.get('editEndTime'); }
+  get editClass() { return this.EditExamForm.get('editClass'); }
+  get editId() { return this.EditExamForm.get('editId'); }
 
   save() {
 
@@ -104,6 +120,26 @@ export class ExamTitleSetupComponent implements OnInit {
         });
   }
 
+  updateExam()
+  {
+    this.saveData.updateExam(this.EditExamForm.value).
+    subscribe(
+      data => {
+
+        
+        this.getExam()
+        alert("Successfully Updated")
+
+      },
+      error => {
+        alert(error.error.message)
+      
+        console.log(error.error.message);
+      });
+  }
+
+
+
   columnDefs = [
     { headerName: 'Exam Title Id', field: 'id', width: 100 },
     { headerName: 'Exam Title Name', field: 'title_name', width: 180 },
@@ -117,7 +153,7 @@ export class ExamTitleSetupComponent implements OnInit {
       autoHeight: true,
 
       template:
-        `<button type="button" data-action-type="view" class="btn btn-primary" data-toggle="modal" data-target="#edit">
+        `<button type="button" data-action-type="edit" class="btn btn-primary" data-toggle="modal" data-target="#edit">
          Edit
        </button>
 
@@ -134,7 +170,7 @@ export class ExamTitleSetupComponent implements OnInit {
       let actionType = e.event.target.getAttribute("data-action-type");
 
       switch (actionType) {
-        case "view":
+        case "edit":
           return this.onActionViewClick(data);
         case "remove":
           return this.onActionRemoveClick(data);
@@ -143,7 +179,13 @@ export class ExamTitleSetupComponent implements OnInit {
   }
 
   public onActionViewClick(data: any) {
-    // console.log("View action clicked", data);
+    console.log("View action clicked", data);
+
+    this.editClass.setValue(data.class_name)
+    // this.editEndTime.setValue(data.end_time)
+    this.editId.setValue(data.id)
+    // this.editStartTime.setValue(data.start_time)
+    this.editTitle.setValue(data.title_name)
 
   }
 

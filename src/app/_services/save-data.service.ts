@@ -248,6 +248,21 @@ export class SaveDataService {
           return data;
         }));
     }
+
+    updateExam(data)
+  
+    {
+      return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editId,target:'week_exam_time',
+      field:{
+        "start_time": data.editStartTime,
+        "end_time": data.editEndTime
+      }
+    
+      })
+        .pipe(map(data => {
+          return data;
+        }));
+    }
   
 
 }
