@@ -274,6 +274,7 @@ export class SaveDataService {
         "option2":data.editoptB,
         "option3": data.editoptC,
         "option4": data.editoptD,
+        "answer":data.editans
       }
     
       })
@@ -292,6 +293,8 @@ export class SaveDataService {
         "option2":data.editoption2,
         "option3": data.editoption3,
         "option4": data.editoption4,
+        "answer":data.editanswer
+
       }
     
       })
@@ -303,9 +306,9 @@ export class SaveDataService {
     updateClass(data)
   
     {
-      return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editId,target:'class',
+      return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editId,target:'update_class',
       field:{
-        "class_name":data.editclass_name,
+        "name":data.editclass_name,
         
       }
     
