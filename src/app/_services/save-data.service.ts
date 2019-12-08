@@ -263,6 +263,41 @@ export class SaveDataService {
           return data;
         }));
     }
+
+    updateQuestion(data)
   
+    {
+      return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editId,target:'week_exam_question',
+      field:{
+        "question":data.editQuestion,
+        "option1": data.editoptA,
+        "option2":data.editoptB,
+        "option3": data.editoptC,
+        "option4": data.editoptD,
+      }
+    
+      })
+        .pipe(map(data => {
+          return data;
+        }));
+    }
+  
+    updateQuestionTopic(data)
+  
+    {
+      return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editquestion_id,target:'topic_exam_question',
+      field:{
+        "question":data.editquestion,
+        "option1": data.editoption1,
+        "option2":data.editoption2,
+        "option3": data.editoption3,
+        "option4": data.editoption4,
+      }
+    
+      })
+        .pipe(map(data => {
+          return data;
+        }));
+    }
 
 }

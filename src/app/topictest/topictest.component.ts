@@ -11,6 +11,7 @@ import { SaveDataService } from '../_services/save-data.service';
 export class TopictestComponent implements OnInit {
 
   topicForm: FormGroup;
+  edittopicForm: FormGroup;
   isSubmitted: boolean = false;
   rowData = [];
   allClass = [];
@@ -39,6 +40,21 @@ export class TopictestComponent implements OnInit {
 
     });
 
+    this.edittopicForm = this.frmBuilder.group({
+      editclass_name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editsubject_name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editchapter_name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editquestion_id: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editvideo_name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editquestion: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(5000)]],
+      editoption1: ["", [Validators.minLength(1), Validators.maxLength(500)]],
+      editoption2: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
+      editoption3: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
+      editoption4: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
+      editanswer: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(500)]]
+
+    });
+
     this.getAllClass()
     this.getAllQuestion()
   }
@@ -53,6 +69,19 @@ export class TopictestComponent implements OnInit {
   get option3() { return this.topicForm.get('option3'); }
   get option4() { return this.topicForm.get('option4'); }
   get answer() { return this.topicForm.get('answer'); }
+
+
+  get editclass_name() { return this.edittopicForm.get('editclass_name'); }
+  get editsubject_name() { return this.edittopicForm.get('editsubject_name'); }
+  get editchapter_name() { return this.edittopicForm.get('editchapter_name'); }
+  get editquestion_id() { return this.edittopicForm.get('editquestion_id'); }
+  get editvideo_name() { return this.edittopicForm.get('editvideo_name'); }
+  get editquestion() { return this.edittopicForm.get('editquestion'); }
+  get editoption1() { return this.edittopicForm.get('editoption1'); }
+  get editoption2() { return this.edittopicForm.get('editoption2'); }
+  get editoption3() { return this.edittopicForm.get('editoption3'); }
+  get editoption4() { return this.edittopicForm.get('editoption4'); }
+  get editanswer() { return this.edittopicForm.get('editanswer'); }
 
 
   save() {
@@ -90,7 +119,7 @@ export class TopictestComponent implements OnInit {
 
           this.Allquestion = data.exam_question_setup
           this.rowData = this.Allquestion.filter(question => question.video_name !== null)
-          console.log(this.rowData)
+          // console.log(this.rowData)
         },
         error => {
 
@@ -172,6 +201,24 @@ export class TopictestComponent implements OnInit {
         });
   }
 
+
+  updateQuestion()
+  {
+    this.saveData.updateQuestionTopic(this.edittopicForm.value).
+    subscribe(
+      data => {
+        this.getAllQuestion()
+
+        alert("Successfully Updated")
+
+      },
+      error => {
+        alert(error.error.message)
+      
+        console.log(error.error.message);
+      });
+  }
+
   columnDefs = [
 
     { headerName: 'Video Name', field: 'video_name', width: 200 },
@@ -190,7 +237,7 @@ export class TopictestComponent implements OnInit {
       autoHeight: true,
 
       template:
-        `<button type="button" data-action-type="view" class="btn btn-primary" data-toggle="modal" data-target="#edit">
+        `<button type="button" data-action-type="edit" class="btn btn-primary" data-toggle="modal" data-target="#edit">
            Edit
          </button>
   
@@ -207,7 +254,7 @@ export class TopictestComponent implements OnInit {
       let actionType = e.event.target.getAttribute("data-action-type");
 
       switch (actionType) {
-        case "view":
+        case "edit":
           return this.onActionViewClick(data);
         case "remove":
           return this.onActionRemoveClick(data);
@@ -217,6 +264,18 @@ export class TopictestComponent implements OnInit {
 
   public onActionViewClick(data: any) {
     // console.log("View action clicked", data);
+    this.editquestion.setValue(data.question)
+    this.editanswer.setValue(data.answer)
+    this.editoption1.setValue(data.option1)
+    this.editoption2.setValue(data.option2)
+    this.editoption3.setValue(data.option3)
+    this.editoption4.setValue(data.option4)
+    this.editclass_name.setValue(data.class_name)
+    this.editsubject_name.setValue(data.subject_name)
+    this.editchapter_name.setValue(data.chapter_name)
+    this.editquestion_id.setValue(data.eqs_id)
+    this.editvideo_name.setValue(data.video_name)
+
 
   }
 

@@ -10,6 +10,7 @@ import { SaveDataService } from '../_services/save-data.service';
 })
 export class QuestionsetupweeklyComponent implements OnInit {
   QuestionForm: FormGroup;
+  editQuestionForm: FormGroup;
   isSubmitted: boolean = false;
   rowData = [];
   examTitleData = [];
@@ -35,6 +36,23 @@ export class QuestionsetupweeklyComponent implements OnInit {
 
     });
 
+
+    this.editQuestionForm = this.frmBuilder.group({
+
+      editexamTitle: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editclass: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      editQuestion: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(5000)]],
+      editoptA: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      editoptB: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      editoptC: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      editoptD: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      editans: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      editId: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+
+
+
+    });
+
     this.getExamDrop()
     this.getClassDrop()
     this.getAllQuestion()
@@ -50,6 +68,15 @@ export class QuestionsetupweeklyComponent implements OnInit {
   get optD() { return this.QuestionForm.get('optD'); }
   get ans() { return this.QuestionForm.get('ans'); }
 
+  get editId() { return this.editQuestionForm.get('editId'); }
+  get editexamTitle() { return this.editQuestionForm.get('editexamTitle'); }
+  get editclass() { return this.editQuestionForm.get('editclass'); }
+  get editQuestion() { return this.editQuestionForm.get('editQuestion'); }
+  get editoptA() { return this.editQuestionForm.get('editoptA'); }
+  get editoptB() { return this.editQuestionForm.get('editoptB'); }
+  get editoptC() { return this.editQuestionForm.get('editoptC'); }
+  get editoptD() { return this.editQuestionForm.get('editoptD'); }
+  get editans() { return this.editQuestionForm.get('editans'); }
 
   save() {
 
@@ -140,6 +167,23 @@ export class QuestionsetupweeklyComponent implements OnInit {
 
 
 
+  updateQuestion()
+  {
+    this.saveData.updateQuestion(this.editQuestionForm.value).
+    subscribe(
+      data => {
+        this.getAllQuestion()
+
+        alert("Successfully Updated")
+
+      },
+      error => {
+        alert(error.error.message)
+      
+        console.log(error.error.message);
+      });
+  }
+
 
 
   columnDefs = [
@@ -187,6 +231,16 @@ export class QuestionsetupweeklyComponent implements OnInit {
 
   public onActionViewClick(data: any) {
     // console.log("View action clicked", data);
+
+    this.editexamTitle.setValue(data.title_name)
+    this.editclass.setValue(data.class_name)
+    this.editQuestion.setValue(data.question)
+    this.editId.setValue(data.eqs_id)
+    this.editans.setValue(data.answer)
+    this.editoptA.setValue(data.option1)
+    this.editoptB.setValue(data.option2)
+    this.editoptC.setValue(data.option3)
+    this.editoptD.setValue(data.option4)
 
   }
 

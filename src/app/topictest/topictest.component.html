@@ -156,3 +156,130 @@
     </div>
   </div>
 </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true" data-backdrop="static"
+  >
+    <div class="modal-dialog">
+        <div class="modal-content">
+               
+          <form [formGroup]='edittopicForm' (ngSubmit)='updateQuestion()'  novalidate>
+            <!-- (ngSubmit)='save()' -->
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </button>
+              <h4 class="modal-title" id="Heading">Update Question</h4>
+             
+          </div>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label>Class Name <span class="error">*</span></label>
+              <input type="text" readonly class="form-control input-sm" formControlName="editclass_name">
+            
+              <div *ngIf=" (editclass_name.dirty || isSubmitted) && editclass_name.invalid" class=" error-msg">
+                <span class="error-msg" *ngIf="editclass_name.errors.required">Select Class</span>
+  
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label>Subject Name <span class="error">*</span></label>
+              <input type="text" readonly class="form-control input-sm" formControlName="editsubject_name">
+             
+              <div *ngIf=" (editsubject_name.dirty || isSubmitted) && editsubject_name.invalid" class=" error-msg">
+                <span class="error-msg" *ngIf="editsubject_name.errors.required">Select Subject</span>
+  
+              </div>
+            </div>
+  
+  
+            <div class="form-group">
+              <label>Chapter Name <span class="error">*</span></label>
+              <input type="text" readonly class="form-control input-sm" formControlName="editchapter_name">
+            
+              <div *ngIf=" (editchapter_name.dirty || isSubmitted) && editchapter_name.invalid" class=" error-msg">
+                <span class="error-msg" *ngIf="editchapter_name.errors.required">Select Chapter</span>
+  
+              </div>
+            </div>
+  
+            
+            <div class="form-group">
+              <label>Video Name <span class="error">*</span></label>
+              <input type="hidden" class="form-control input-sm" formControlName="editquestion_id">
+              <input type="text" readonly class="form-control input-sm" formControlName="editvideo_name">
+         
+              <div *ngIf=" (editquestion_id.dirty || isSubmitted) && editquestion_id.invalid" class=" error-msg">
+                <span class="error-msg" *ngIf="editquestion_id.errors.required">Select Video</span>
+  
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Question</label>
+      
+              <textarea class="form-control input-sm" formControlName="editquestion"></textarea>
+              <div *ngIf=" (editquestion.dirty || isSubmitted) && editquestion.invalid" class=" error-msg">
+                <span class="error-msg" *ngIf="editquestion.errors.required">Enter Question</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Option A</label>
+              <input type="text" class="form-control input-sm" formControlName="editoption1">
+              <div *ngIf=" (editoption1.dirty || isSubmitted) && editoption1.invalid" class=" error-msg">
+                <span class="error-msg" *ngIf="editoption1.errors.required">Enter Option A</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Option B</label>
+              <input type="text" class="form-control input-sm" formControlName="editoption2">
+              <div *ngIf=" (editoption2.dirty || isSubmitted) && editoption2.invalid" class=" error-msg">
+                <span class="error-msg" *ngIf="editoption2.errors.required">Enter Option B</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Option C</label>
+              <input type="text" class="form-control input-sm" formControlName="editoption3">
+              <div *ngIf=" (editoption3.dirty || isSubmitted) && editoption3.invalid" class=" error-msg">
+                <span class="error-msg" *ngIf="editoption3.errors.required">Enter Option C</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Option D</label>
+              <input type="text" class="form-control input-sm" formControlName="editoption4">
+              <div *ngIf=" (editoption4.dirty || isSubmitted) && editoption4.invalid" class=" error-msg">
+                <span class="error-msg" *ngIf="editoption4.errors.required">Enter Option D</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Select Answer</label>
+              <select class="form-control input-sm" formControlName="editanswer">
+                <option value="" disabled>Select Answer</option>
+                <option value="1" >Option A</option>
+                <option value="2" >Option B</option>
+                <option value="3" >Option C</option>
+                <option value="4">Option D</option>
+              
+              </select>
+              <div *ngIf=" (editanswer.dirty || isSubmitted) && editanswer.invalid" class=" error-msg">
+                <span class="error-msg" *ngIf="editanswer.errors.required">Select Answer</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <button class="btn btn-warning btn-block" type="submit" [disabled]="!edittopicForm.valid">
+                  Edit Question</button>
+              </div>
+            
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
