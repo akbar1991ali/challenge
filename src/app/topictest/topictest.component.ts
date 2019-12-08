@@ -43,7 +43,7 @@ export class TopictestComponent implements OnInit {
     this.edittopicForm = this.frmBuilder.group({
       editclass_name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       editsubject_name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      editchapter_name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      // editchapter_name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       editquestion_id: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       editvideo_name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       editquestion: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(5000)]],
@@ -73,7 +73,7 @@ export class TopictestComponent implements OnInit {
 
   get editclass_name() { return this.edittopicForm.get('editclass_name'); }
   get editsubject_name() { return this.edittopicForm.get('editsubject_name'); }
-  get editchapter_name() { return this.edittopicForm.get('editchapter_name'); }
+  // get editchapter_name() { return this.edittopicForm.get('editchapter_name'); }
   get editquestion_id() { return this.edittopicForm.get('editquestion_id'); }
   get editvideo_name() { return this.edittopicForm.get('editvideo_name'); }
   get editquestion() { return this.edittopicForm.get('editquestion'); }
@@ -272,7 +272,7 @@ export class TopictestComponent implements OnInit {
     this.editoption4.setValue(data.option4)
     this.editclass_name.setValue(data.class_name)
     this.editsubject_name.setValue(data.subject_name)
-    this.editchapter_name.setValue(data.chapter_name)
+    // this.editchapter_name.setValue(data.chapter_name)
     this.editquestion_id.setValue(data.eqs_id)
     this.editvideo_name.setValue(data.video_name)
 

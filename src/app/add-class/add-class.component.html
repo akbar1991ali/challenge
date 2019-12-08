@@ -76,3 +76,47 @@
   </div>
 </div>
 
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true" data-backdrop="static"
+  >
+    <div class="modal-dialog">
+        <div class="modal-content">
+               
+            <form [formGroup]='editclassForm' (ngSubmit)='updateClass()'  novalidate>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                    <h4 class="modal-title" id="Heading">Update Class</h4>
+                   
+                </div>
+                <div class="modal-body">
+
+                    
+                    <div class="form-group">
+                      <label>Class Name</label>
+                      <input type="text" class="form-control input-sm" formControlName="editclass_name">
+                      <input type="hidden" class="form-control input-sm" formControlName="editId">
+                      <div *ngIf=" (editclass_name.dirty || isSubmitted) && editclass_name.invalid" class=" error-msg">
+                        <span class="error-msg" *ngIf="editclass_name.errors.required">Enter Class</span>
+                      </div>
+                    </div>
+                 
+                </div>
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;" [disabled]="!editclassForm.valid">
+                        <span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+

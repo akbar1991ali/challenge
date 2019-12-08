@@ -300,4 +300,19 @@ export class SaveDataService {
         }));
     }
 
+    updateClass(data)
+  
+    {
+      return this.http.post<any>(this.apiUrl + 'data_update.php',{id:data.editId,target:'class',
+      field:{
+        "class_name":data.editclass_name,
+        
+      }
+    
+      })
+        .pipe(map(data => {
+          return data;
+        }));
+    }
+
 }

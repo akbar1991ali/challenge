@@ -10,6 +10,7 @@ import { SaveDataService } from '../_services/save-data.service';
 })
 export class AddClassComponent implements OnInit {
   classForm: FormGroup;
+  editclassForm: FormGroup;
   isSubmitted: boolean = false;
   rowData = [];
   constructor(private frmBuilder: FormBuilder, private http: HttpClient,
@@ -24,6 +25,13 @@ export class AddClassComponent implements OnInit {
 
     });
 
+    this.editclassForm = this.frmBuilder.group({
+
+      editclass_name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(150)]],
+      editId: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(150)]],
+
+    });
+
 
     this.getAllClass();
 
@@ -31,6 +39,11 @@ export class AddClassComponent implements OnInit {
 
 
   get class_name() { return this.classForm.get('class_name'); }
+
+
+  get editclass_name() { return this.editclassForm.get('editclass_name'); }
+  get editId() { return this.editclassForm.get('editId'); }
+
 
 
 
@@ -95,6 +108,23 @@ export class AddClassComponent implements OnInit {
         });
   }
 
+  updateClass()
+  {
+    this.saveData.updateClass(this.editclassForm.value).
+    subscribe(
+      data => {
+        this.getAllClass()
+
+        alert("Successfully Updated")
+
+      },
+      error => {
+        alert(error.error.message)
+      
+        console.log(error.error.message);
+      });
+  }
+
 
 
   columnDefs = [
@@ -109,7 +139,9 @@ export class AddClassComponent implements OnInit {
 
       template:
         `
-
+        <button type="button" data-action-type="edit" class="btn btn-primary" data-toggle="modal" data-target="#edit">
+        Edit
+     </button>
       <button type="button" data-action-type="remove" class="btn btn-warning">
          Delete
       </button>`
@@ -124,7 +156,7 @@ export class AddClassComponent implements OnInit {
       let actionType = e.event.target.getAttribute("data-action-type");
 
       switch (actionType) {
-        case "view":
+        case "edit":
           return this.onActionViewClick(data);
         case "remove":
           return this.onActionRemoveClick(data);
@@ -133,7 +165,9 @@ export class AddClassComponent implements OnInit {
   }
 
   public onActionViewClick(data: any) {
-    // console.log("View action clicked", data);
+    console.log("View action clicked", data);
+    this.editclass_name.setValue(data.name)
+    this.editId.setValue(data.id)
 
   }
 
