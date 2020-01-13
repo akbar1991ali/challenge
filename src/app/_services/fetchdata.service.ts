@@ -159,5 +159,16 @@ export class FetchdataService {
                                 return data;
                             }));
                     
-                          } 
+                          }
+
+                          getFeeDetails(id) {
+                            return this.http.post<any>(this.apiUrl+'payment_history.php',{user_id:id})
+                                .pipe(map(data => {
+                                   
+                                    return data;
+                                }));
+                        
+                              }
+
+
 }

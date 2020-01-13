@@ -13,6 +13,7 @@ export class StudentsListComponent implements OnInit {
   StudentEdit: FormGroup;
   classData = [];
   isSubmitted = false
+  feeDetails:any
 
   constructor(private frmBuilder: FormBuilder, private fetchData: FetchdataService, private saveData: SaveDataService) { }
 
@@ -65,6 +66,21 @@ export class StudentsListComponent implements OnInit {
 
           this.rowData = data.class;
 
+
+        },
+        error => {
+
+          console.log(error.error);
+        });
+  }
+
+  getFeeDetails(id) {
+    this.fetchData.getFeeDetails(id).
+      subscribe(
+        data => {
+
+          console.log(data)
+this.feeDetails=data.data
 
         },
         error => {
@@ -163,6 +179,8 @@ export class StudentsListComponent implements OnInit {
 
   public onActionViewClick(data: any) {
     // console.log("View action clicked", data);
+
+this.getFeeDetails(data.user_id)
 
   }
 

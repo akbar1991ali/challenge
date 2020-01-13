@@ -134,8 +134,14 @@
          
       </div>
       <div class="modal-body">
+        <div class="wall" *ngFor="let data of feeDetails">
 
-      <p>Under Construction</p>
+          <p><b>Transaction id : </b> {{data.txnid}}</p>
+          <p><b>Amount : </b> {{data.amount}}</p>
+          <p><b>Date : </b> {{data.addedon}}</p>
+          <p><b>Source : </b> {{data.bankcode}}</p>
+        </div>
+      
     </div>
       </div>
       <!-- /.modal-content -->
