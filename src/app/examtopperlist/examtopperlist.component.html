@@ -43,7 +43,7 @@
       </div>
 
       <div class="panel-body">
-        <table class="table table-hover table-bordered table-responsive">
+        <!-- <table class="table table-hover table-bordered table-responsive">
           <thead>
             <tr>
               <th>Sr. No</th>
@@ -53,7 +53,7 @@
               <th>Percentage</th>
               <th>Start Time</th>
               <th>End Time</th>
-              <!-- <th>Time taken</th> -->
+              <th>Time taken</th>
             </tr>
           </thead>
           <tbody>
@@ -65,11 +65,17 @@
               <td>{{data.percentage}}</td>
               <td>{{data.exam_start_time | date : 'dd-MM-yyyy HH:mm'}}</td>
               <td>{{data.exam_end_time | date : 'dd-MM-yyyy HH:mm'}}</td>
-              <!-- <td>{{data.used_time | date : 'HH:mm'}}</td> -->
+              <td>{{data.used_time | date : 'HH:mm'}}</td>
             </tr>
          
           </tbody>
-        </table>
+        </table> -->
+
+
+        <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-balham" [enableSorting]="true"
+        [enableFilter]="true" [floatingFilter]="true" [rowData]="topper" [columnDefs]="columnDefs"
+        [pagination]="true" [paginationPageSize]="10" >
+      </ag-grid-angular>
       
       </div>
       <p>List of top Ten Students Examination wise, Select Examination for top ten students list with all details</p>

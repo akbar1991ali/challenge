@@ -32,6 +32,21 @@ constructor(private frmBuilder: FormBuilder, private http: HttpClient,
   get examTitle() { return this.topperForm.get('examTitle'); }
 
 
+  columnDefs = [
+
+    { headerName: 'Full Name', field: 'Full_name', width: 200 },
+    { headerName: 'Email', field: 'email', width: 200 },
+    { headerName: 'Contact', field: 'contact', width: 200 },
+    { headerName: 'Exam', field: 'title_name', width: 200 },
+    { headerName: 'Percentage', field: 'percentage', width: 100 },
+    { headerName: 'Rank', field: 'rank', width: 100 },
+    { headerName: 'Start Time', field: 'exam_start_time', width: 150 },
+    { headerName: 'End Time', field: 'exam_end_time', width: 150 },
+ 
+  ];
+
+
+
 
   getExamDrop() {
     this.fetchData.getExamTitle().
