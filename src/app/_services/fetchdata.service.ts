@@ -171,4 +171,16 @@ export class FetchdataService {
                               }
 
 
+                              getTopperList(id) {
+                                return this.http.post<any>(this.apiUrl+'student_result.php',{"action":"top_result",
+                                "title_id":id})
+                                    .pipe(map(data => {
+                                       
+                                      
+                                        return data;
+                                    }));
+                            
+                                  }
+
+
 }

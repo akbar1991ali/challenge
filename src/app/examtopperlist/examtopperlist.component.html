@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="scp-breadcrumb shadow-bottom">
+    <ul class="breadcrumb ">
+      <li>
+        <i class="fa fa-home" aria-hidden="true"></i>
+        <a [routerLink]="['/home']"> Home</a>
+      </li>
+     
+      <li class="active">Topper List </li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default shadow-all">
+      <div class="panel-heading">Topper List</div>
+
+      <div class="panel-body">
+        <form [formGroup]='topperForm'  novalidate>
+
+          <div class="form-group">
+            <label>Select Exam</label>
+            <select class="form-control input-sm" formControlName="examTitle" (change)="getTopperList($event.target.value)">
+              <option value="" disabled>Select Exam</option>
+              <option *ngFor="let exam of examTitleData" [value]="exam.id">{{exam.title_name}}</option>
+            </select>
+            <div *ngIf=" (examTitle.dirty) && examTitle.invalid" class=" error-msg">
+              <span class="error-msg" *ngIf="examTitle.errors.required">Select Title</span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-lg-12">
+    <div class="panel panel-default shadow-all" >
+      <div class="panel-heading">
+        <h3 class="panel-title">Topper List</h3>
+
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover table-bordered table-responsive">
+          <thead>
+            <tr>
+              <th>Sr. No</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Exam</th>
+              <th>Percentage</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <!-- <th>Time taken</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of topper; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{data.Full_name}}</td>
+              <td>{{data.email}}</td>
+              <td>{{data.title_name}}</td>
+              <td>{{data.percentage}}</td>
+              <td>{{data.exam_start_time | date : 'dd-MM-yyyy HH:mm'}}</td>
+              <td>{{data.exam_end_time | date : 'dd-MM-yyyy HH:mm'}}</td>
+              <!-- <td>{{data.used_time | date : 'HH:mm'}}</td> -->
+            </tr>
+         
+          </tbody>
+        </table>
+      
+      </div>
+      <p>List of top Ten Students Examination wise, Select Examination for top ten students list with all details</p>
+    </div>
+  </div>
+</div>
+

@@ -29,6 +29,7 @@ import { TopictestComponent } from './topictest/topictest.component';
 import { AddClassComponent } from './add-class/add-class.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
+import { ExamtopperlistComponent } from './examtopperlist/examtopperlist.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
     TopictestComponent,
     AddClassComponent,
     ForgetpasswordComponent,
-    ResetpasswordComponent
+    ResetpasswordComponent,
+    ExamtopperlistComponent
   ],
   imports: [
     BrowserModule,

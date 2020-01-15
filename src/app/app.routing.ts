@@ -17,6 +17,7 @@ import { TopictestComponent } from './topictest/topictest.component';
 import { AddClassComponent } from './add-class/add-class.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
+import { ExamtopperlistComponent } from './examtopperlist/examtopperlist.component';
 
 
 const appRoutes: Routes = [
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     { path: 'add-class', component:AddClassComponent},
     { path: 'recoverpassword', component:ForgetpasswordComponent, outlet: "sidebar"},
     { path: 'resetpassword', component:ResetpasswordComponent, outlet: "sidebar"},
+    { path: 'topperlist', component:ExamtopperlistComponent},
     // 
     // otherwise redirect to home
     { path: '**', redirectTo: 'login' }
